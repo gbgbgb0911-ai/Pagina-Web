@@ -248,8 +248,12 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,251,253,.85);backdro
 
 /* =================== FONDOS TEMÁTICOS + REVEAL AL SCROLL =================== */
 .tech{position:relative;overflow:hidden;background:linear-gradient(180deg,#0A1922,#0E2534 55%,#0A1922)}
-.tech>.container{position:relative;z-index:1}
-.circuit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.tech>.container{position:relative;z-index:2}
+.circuit{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+video.circuit{object-fit:cover}
+/* scrim: mantiene el texto legible mientras el video pasa por su punto brillante */
+.tech::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(9,20,28,.9),rgba(10,26,36,.74) 45%,rgba(9,20,28,.92))}
 .tech h2{color:#fff}
 .tech .lead{color:#9FBAC6}
 .tech .kicker{color:#4FE3FF}
@@ -340,94 +344,6 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13.5px;color:va
 </head>
 <body>
 
-<!-- CHIPSET IA: placa de circuito con energia fluyendo (fondo de secciones oscuras) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="chipset" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMid slice">
-    <defs>
-      <linearGradient id="chipbody" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0" stop-color="#16323F"/><stop offset="1" stop-color="#081119"/>
-      </linearGradient>
-      <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
-        <feGaussianBlur stdDeviation="2.6" result="b"/>
-        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-      </filter>
-    </defs>
-
-    <!-- pistas base (cobre apagado) -->
-    <g stroke="#1B4A5F" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <path id="tl1" d="M552 148 H 430 L 390 108 H 250"/>
-      <path id="tl2" d="M552 170 H 300 L 260 210 H 130"/>
-      <path id="tl3" d="M552 192 H 450 L 410 232 H 260"/>
-      <path id="tl4" d="M572 122 V 70 L 532 30 H 440"/>
-      <path id="tl5" d="M572 218 V 280 H 460"/>
-      <path id="tr1" d="M648 148 H 770 L 810 108 H 950"/>
-      <path id="tr2" d="M648 170 H 900 L 940 210 H 1070"/>
-      <path id="tr3" d="M648 192 H 750 L 790 232 H 940"/>
-      <path id="tr4" d="M628 122 V 60 H 760"/>
-      <path id="tr5" d="M628 218 V 292 H 820"/>
-    </g>
-
-    <!-- vias en los codos -->
-    <g fill="#0A1922" stroke="#2A6E8C" stroke-width="1.5">
-      <circle cx="390" cy="108" r="4"/><circle cx="260" cy="210" r="4"/><circle cx="410" cy="232" r="4"/>
-      <circle cx="810" cy="108" r="4"/><circle cx="940" cy="210" r="4"/><circle cx="790" cy="232" r="4"/>
-      <circle cx="532" cy="30" r="4"/>
-    </g>
-
-    <!-- pads y conectores en los extremos -->
-    <g>
-      <rect x="214" y="94" width="36" height="28" rx="4" fill="#102836" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="222" y1="101" x2="242" y2="101" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="222" y1="108" x2="242" y2="108" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="222" y1="115" x2="242" y2="115" stroke="#2A6E8C" stroke-width="1.5"/>
-      <rect x="1034" y="196" width="36" height="28" rx="4" fill="#102836" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="1042" y1="203" x2="1062" y2="203" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="1042" y1="210" x2="1062" y2="210" stroke="#2A6E8C" stroke-width="1.5"/>
-      <line x1="1042" y1="217" x2="1062" y2="217" stroke="#2A6E8C" stroke-width="1.5"/>
-      <circle cx="130" cy="210" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="260" cy="232" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="440" cy="30" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="460" cy="280" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="950" cy="108" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="940" cy="232" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="760" cy="60" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-      <circle cx="820" cy="292" r="6" fill="#102836" stroke="#2A6E8C" stroke-width="2"/>
-    </g>
-
-    <!-- energia brillante recorriendo las pistas -->
-    <g stroke="#4FE3FF" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="14 220" filter="url(#glow)">
-      <path d="M552 148 H 430 L 390 108 H 250"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="3.1s" repeatCount="indefinite"/></path>
-      <path d="M552 170 H 300 L 260 210 H 130"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="4.2s" repeatCount="indefinite"/></path>
-      <path d="M552 192 H 450 L 410 232 H 260"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="3.6s" repeatCount="indefinite"/></path>
-      <path d="M572 122 V 70 L 532 30 H 440"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="3.4s" repeatCount="indefinite"/></path>
-      <path d="M648 148 H 770 L 810 108 H 950"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="2.9s" repeatCount="indefinite"/></path>
-      <path d="M648 170 H 900 L 940 210 H 1070"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="4.5s" repeatCount="indefinite"/></path>
-      <path d="M648 192 H 750 L 790 232 H 940"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="3.8s" repeatCount="indefinite"/></path>
-      <path d="M628 218 V 292 H 820"><animate attributeName="stroke-dashoffset" from="0" to="-234" dur="4s" repeatCount="indefinite"/></path>
-    </g>
-
-    <!-- paquetes de datos (naranja) viajando -->
-    <circle r="4" fill="#FF7A29" filter="url(#glow)"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#tl2"/></animateMotion></circle>
-    <circle r="4" fill="#FF7A29" filter="url(#glow)"><animateMotion dur="3.8s" repeatCount="indefinite"><mpath href="#tr2"/></animateMotion></circle>
-
-    <!-- chip central con pines -->
-    <g>
-      <g fill="#2A6E8C">
-        <rect x="566" y="112" width="9" height="10" rx="2"/><rect x="590" y="112" width="9" height="10" rx="2"/><rect x="614" y="112" width="9" height="10" rx="2"/><rect x="638" y="112" width="9" height="10" rx="2"/>
-        <rect x="566" y="218" width="9" height="10" rx="2"/><rect x="590" y="218" width="9" height="10" rx="2"/><rect x="614" y="218" width="9" height="10" rx="2"/>
-        <rect x="542" y="142" width="10" height="9" rx="2"/><rect x="542" y="166" width="10" height="9" rx="2"/><rect x="542" y="190" width="10" height="9" rx="2"/>
-        <rect x="648" y="142" width="10" height="9" rx="2"/><rect x="648" y="166" width="10" height="9" rx="2"/><rect x="648" y="190" width="10" height="9" rx="2"/>
-      </g>
-      <rect x="552" y="122" width="96" height="96" rx="12" fill="url(#chipbody)" stroke="#2A6E8C" stroke-width="2"/>
-      <rect x="566" y="136" width="68" height="68" rx="8" fill="none" stroke="#1B4A5F" stroke-width="1.5"/>
-      <circle cx="574" cy="144" r="2.5" fill="#4FE3FF" opacity=".8"/>
-      <text x="600" y="181" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="30" fill="#4FE3FF" filter="url(#glow)">IA</text>
-      <rect x="552" y="122" width="96" height="96" rx="12" fill="none" stroke="#4FE3FF" stroke-width="2" filter="url(#glow)">
-        <animate attributeName="opacity" values=".15;.8;.15" dur="2.8s" repeatCount="indefinite"/>
-      </rect>
-    </g>
-  </symbol>
-</svg>
 
 <!-- SECCIÓN: HEADER -->
 <header>
@@ -510,7 +426,9 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13.5px;color:va
 
 <!-- SECCIÓN: PROBLEMA -->
 <section class="tech">
-  <svg class="circuit" aria-hidden="true"><use href="#chipset"/></svg>
+  <video class="circuit" muted loop playsinline preload="auto" aria-hidden="true" poster="assets/chip-poster.jpg">
+    <source src="assets/chip-bg.mp4" type="video/mp4">
+  </video>
   <div class="container center">
     <span class="kicker">El problema</span>
     <h2>El desarrollo tradicional es lento, caro<br>y no lo entiendes.</h2>
@@ -726,7 +644,9 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13.5px;color:va
 
 <!-- SECCIÓN: PROCESO -->
 <section id="proceso" class="tech" style="padding-top:64px">
-  <svg class="circuit" aria-hidden="true"><use href="#chipset"/></svg>
+  <video class="circuit" muted loop playsinline preload="auto" aria-hidden="true" poster="assets/chip-poster.jpg">
+    <source src="assets/chip-bg.mp4" type="video/mp4">
+  </video>
   <div class="container">
     <span class="kicker">Cómo trabajo</span>
     <h2>De idea a sistema en 4 pasos.</h2>
@@ -815,7 +735,9 @@ footer{border-top:1px solid var(--line);padding:36px 0;font-size:13.5px;color:va
 
 <!-- SECCIÓN: TESTIMONIOS -->
 <section class="tech">
-  <svg class="circuit" aria-hidden="true"><use href="#chipset"/></svg>
+  <video class="circuit" muted loop playsinline preload="auto" aria-hidden="true" poster="assets/chip-poster.jpg">
+    <source src="assets/chip-bg.mp4" type="video/mp4">
+  </video>
   <div class="container center">
     <span class="kicker">Testimonios</span>
     <h2>Lo que dicen quienes ya lo hicieron.</h2>
@@ -913,6 +835,20 @@ if(!rm){
     const ty=setInterval(()=>{m.textContent=t.slice(0,++i);if(i>=t.length)clearInterval(ty)},26);
   }
 }
+
+// 4) Video de fondo del chip: solo reproduce la sección visible.
+//    Ahorra CPU/batería (no decodifica 3 videos a la vez) y respeta reduced-motion.
+const circuits=document.querySelectorAll('video.circuit');
+if(!rm){
+  const vio=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.play().catch(()=>{}); }
+      else{ e.target.pause(); }
+    });
+  },{threshold:.15});
+  circuits.forEach(v=>vio.observe(v));
+}
+// Con reduced-motion no se reproduce: queda el póster estático (frame oscuro).
 </script>
 </body>
 </html>
